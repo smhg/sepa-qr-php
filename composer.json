@@ -1,0 +1,19 @@
+{
+    "name": "smhg/sepa-qr",
+    "description": "Generate SEPA QR codes",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "smhg",
+            "email": "sam.hauglustaine@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0"
+    },
+    "autoload": {
+        "psr-0": {
+            "SepaQr": "src/"
+        }
+    }
+}
