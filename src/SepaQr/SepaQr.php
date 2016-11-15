@@ -31,7 +31,7 @@ class SepaQr extends QrCode
     public function setServiceTag($serviceTag = 'BCD')
     {
         if ($serviceTag !== 'BCD') {
-            throw new SepaQrException('Invalid service tag');
+            throw new Exception('Invalid service tag');
         }
 
         $this->sepaValues['serviceTag'] = $serviceTag;
@@ -42,7 +42,7 @@ class SepaQr extends QrCode
     public function setVersion($version = 2)
     {
         if (!in_array($version, array(1, 2))) {
-            throw new SepaQrException('Invalid version');
+            throw new Exception('Invalid version');
         }
 
         $this->sepaValues['version'] = $version;
@@ -59,7 +59,7 @@ class SepaQr extends QrCode
     public function setIdentification($identification = 'SCT')
     {
         if ($identification !== 'SCT') {
-            throw new SepaQrException('Invalid identification code');
+            throw new Exception('Invalid identification code');
         }
 
         $this->sepaValues['identification'] = $identification;
@@ -118,55 +118,55 @@ class SepaQr extends QrCode
     public function validateSepaValues($values)
     {
         if ($values['version'] === 1 && !$values['bic']) {
-            throw new SepaQrException('Missing BIC of the beneficiary bank');
+            throw new Exception('Missing BIC of the beneficiary bank');
         }
 
         if ($values['bic']) {
             if (strlen($values['bic']) < 8) {
-                throw new SepaQrException('BIC of the beneficiary bank cannot be shorter than 8 characters');
+                throw new Exception('BIC of the beneficiary bank cannot be shorter than 8 characters');
             }
 
             if (strlen($values['bic']) > 11) {
-                throw new SepaQrException('BIC of the beneficiary bank cannot be longer than 11 characters');
+                throw new Exception('BIC of the beneficiary bank cannot be longer than 11 characters');
             }
         }
 
         if (!$values['name']) {
-            throw new SepaQrException('Missing name of the beneficiary');
+            throw new Exception('Missing name of the beneficiary');
         }
 
         if (strlen($values['name']) > 70) {
-            throw new SepaQrException('Name of the beneficiary cannot be longer than 70 characters');
+            throw new Exception('Name of the beneficiary cannot be longer than 70 characters');
         }
 
         if (!$values['iban']) {
-            throw new SepaQrException('Missing account number of the beneficiary');
+            throw new Exception('Missing account number of the beneficiary');
         }
 
         if (strlen($values['iban']) > 34) {
-            throw new SepaQrException('Account number of the beneficiary cannot be longer than 34 characters');
+            throw new Exception('Account number of the beneficiary cannot be longer than 34 characters');
         }
 
         if ($values['amount']) {
             if ($values['amount'] < 0.01) {
-                throw new SepaQrException('Amount of the credit transfer cannot be smaller than 0.01 Euro');
+                throw new Exception('Amount of the credit transfer cannot be smaller than 0.01 Euro');
             }
 
             if ($values['amount'] > 999999999.99) {
-                throw new SepaQrException('Amount of the credit transfer cannot be higher than 999999999.99 Euro');
+                throw new Exception('Amount of the credit transfer cannot be higher than 999999999.99 Euro');
             }
         }
 
         if ($values['remittanceReference'] && strlen($values['remittanceReference']) > 35) {
-            throw new SepaQrException('Structured remittance information cannot be longer than 35 characters');
+            throw new Exception('Structured remittance information cannot be longer than 35 characters');
         }
 
         if ($values['remittanceText'] && strlen($values['remittanceText']) > 140) {
-            throw new SepaQrException('Unstructured remittance information cannot be longer than 140 characters');
+            throw new Exception('Unstructured remittance information cannot be longer than 140 characters');
         }
 
         if ($values['information'] && strlen($values['information']) > 70) {
-            throw new SepaQrException('Beneficiary to originator information cannot be longer than 70 characters');
+            throw new Exception('Beneficiary to originator information cannot be longer than 70 characters');
         }
     }
 
