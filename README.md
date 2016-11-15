@@ -3,6 +3,11 @@ Generates SEPA QR codes based on the [European Payments Council's standard](http
 
 Extends the [QrCode](https://github.com/endroid/QrCode) library preserving all its functionality in case lower level QR code manipulation is needed.
 
+## Installation
+```bash
+composer require smhg/sepa-qr
+```
+
 ## Example
 ```php
 use SepaQr\SepaQr;
