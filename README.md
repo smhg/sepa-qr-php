@@ -24,6 +24,7 @@ $sepaQr
 $tmpFileName = tempnam("/tmp");
 $tmpFile = fopen($tmpFileName, "w");
 fwrite($tmpFile, $sepaQr->get());
+fclose($tmpFile);
 ```
 ## Methods
 
