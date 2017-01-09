@@ -17,7 +17,7 @@ $sepaQr = new SepaQr();
 $sepaQr
   ->setName('Name of the beneficiary')
   ->setIban('BE123456789123456789')
-  ->setAmount(100) // The standard (currently?) only supports Euro
+  ->setAmount(100) // The amount in Euro
   ->setRemittanceText('Invoice 123456789')
   ->setSize(300);
 
@@ -29,14 +29,37 @@ fclose($tmpFile);
 ## Methods
 
 ### setServiceTag($serviceTag = 'BCD')
+Set the service tag. Currently (?) only one value is allowed: BCD.
+
 ### setVersion($version = 2)
+Set the SEPA QR standard version. In version 1 a BIC is mandatory. In version 2 a BIC is only mandatory outside EEA countries.
+
 ### setCharacterSet($characterSet = SepaQr::UTF_8)
+Set the character set. Available constants are **UTF_8**, **ISO8859_5, **ISO8859_1,** **ISO8859_7, **ISO8859_2, **ISO8859_10, **ISO8859_4 or **ISO8859_15**.
+
 ### setIdentification($identification = 'SCT')
+Set the identification code. Currently (?) only one value is allowed: SCT.
+
 ### setBic($bic)
+Set the AT-23 BIC of the beneficiary bank.
+
 ### setName($name)
+Set the AT-21 name of the beneficiary
+
 ### setIban($iban)
+Set the AT-20 account number of the beneficiary. Only IBAN is allowed.
+
 ### setAmount($amount)
+Set the AT-04 amount of the credit transfer. Currently (?) only amounts in Euro are allowed.
+
 ### setPurpose($purpose)
+Set the AT-44 purpose of the credit transfer.
+
 ### setRemittanceReference($remittanceReference)
+Set the AT-05 remittance information (structured). Creditor reference (ISO 11649) RF creditor reference may be used.
+
 ### setRemittanceText($remittanceText)
+Set the AT-05 remittance information (unstructured).
+
 ### setInformation($information)
+Set the beneficiary to originator information.
