@@ -107,12 +107,20 @@ class SepaQr extends QrCode
 
     public function setRemittanceReference($remittanceReference)
     {
+        if (isset($this->sepaValues['remittanceText'])) {
+            throw new Exception('Use either structured or unstructured remittance information');
+        }
+
         $this->sepaValues['remittanceReference'] = $remittanceReference;
         return $this;
     }
 
     public function setRemittanceText($remittanceText)
     {
+        if (isset($this->sepaValues['remittanceReference'])) {
+            throw new Exception('Use either structured or unstructured remittance information');
+        }
+
         $this->sepaValues['remittanceText'] = $remittanceText;
         return $this;
     }
@@ -205,8 +213,7 @@ class SepaQr extends QrCode
             $values['iban'],
             sprintf('EUR%.2f', $values['amount']),
             $values['purpose'],
-            $values['remittanceReference'],
-            $values['remittanceText'],            
+            $values['remittanceReference'] ? $values['remittanceReference'] : $values['remittanceText'],
             $values['information']
         )));
 

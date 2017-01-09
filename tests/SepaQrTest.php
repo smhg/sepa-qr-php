@@ -20,7 +20,17 @@ class SepaQrTest extends \PHPUnit_Framework_TestCase
         $qrCode->setCharacterSet('UTF8');
     }
 
-    public function testGet()
+    public function testSetRemittance()
+    {
+        $qrCode = new SepaQr();
+
+        $this->setExpectedException('SepaQr\Exception');
+
+        $qrCode->setRemittanceReference('ABC')
+            ->setRemittanceText('DEF');
+    }
+
+    public function testCreate()
     {
         $qrCode = new SepaQr();
 
