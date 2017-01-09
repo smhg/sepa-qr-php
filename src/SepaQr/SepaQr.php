@@ -175,6 +175,8 @@ class SepaQr extends QrCode
         $defaults = array(
             'bic' => '',
             'name' => '',
+            'iban' => '',
+            'amount' => 0.01,
             'purpose' => '',
             'remittanceReference' => '',
             'remittanceText' => '',
