@@ -16,5 +16,11 @@
         "psr-0": {
             "SepaQr": "src/"
         }
+    },
+    "scripts": {
+        "test": "phpunit"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^5.7"
     }
 }
