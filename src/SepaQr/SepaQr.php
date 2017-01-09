@@ -206,6 +206,7 @@ class SepaQr extends QrCode
             sprintf('EUR%.2f', $values['amount']),
             $values['purpose'],
             $values['remittanceReference'],
+            $values['remittanceText'],            
             $values['information']
         )));
 
