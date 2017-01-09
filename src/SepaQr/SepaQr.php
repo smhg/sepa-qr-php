@@ -41,7 +41,9 @@ class SepaQr extends QrCode
 
     public function setVersion($version = 2)
     {
-        if (!in_array($version, array(1, 2))) {
+        $version = (int)$version;
+
+        if (!in_array($version, range(1, 2))) {
             throw new Exception('Invalid version');
         }
 
@@ -50,8 +52,14 @@ class SepaQr extends QrCode
         return $this;
     }
 
-    public function setCharacterSet($characterSet = strictlyPHP_SepaQr::UTF_8)
+    public function setCharacterSet($characterSet = self::UTF_8)
     {
+        $characterSet = (int)$characterSet;
+
+        if (!in_array($characterSet, range(1, 8))) {
+            throw new Exception('Invalid character set');
+        }
+
         $this->sepaValues['characterSet'] = $characterSet;
         return $this;
     }
