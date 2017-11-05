@@ -21,10 +21,8 @@ $sepaQr
   ->setRemittanceText('Invoice 123456789')
   ->setSize(300);
 
-$tmpFileName = tempnam("/tmp");
-$tmpFile = fopen($tmpFileName, "w");
-fwrite($tmpFile, $sepaQr->get());
-fclose($tmpFile);
+header('Content-Type: ' . $sepaQr->getContentType());
+echo $sepaQr->writeString();
 ```
 ## Methods
 
