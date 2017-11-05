@@ -1,6 +1,7 @@
 <?php
 namespace SepaQr;
 
+use Endroid\QrCode\ErrorCorrectionLevel;
 use Endroid\QrCode\QrCode;
 
 class SepaQr extends QrCode
@@ -25,7 +26,7 @@ class SepaQr extends QrCode
     {
         parent::__construct($text);
 
-        $this->setErrorCorrection(self::LEVEL_MEDIUM);
+        $this->setErrorCorrectionLevel(ErrorCorrectionLevel::MEDIUM);
     }
 
     public function setServiceTag($serviceTag = 'BCD')
@@ -186,7 +187,7 @@ class SepaQr extends QrCode
         }
     }
 
-    public function create()
+    public function getWriter($name = null)
     {
         $defaults = array(
             'bic' => '',
@@ -217,6 +218,6 @@ class SepaQr extends QrCode
             $values['information']
         )));
 
-        return parent::create();
+        return parent::getWriter($name);
     }
 }

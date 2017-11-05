@@ -1,13 +1,19 @@
 <?php
+declare(strict_types=1);
+
 namespace SepaQr\Test;
 
+use PHPUnit\Framework\TestCase;
 use SepaQr\SepaQr;
 
-class SepaQrTest extends \PHPUnit_Framework_TestCase
+class SepaQrTest extends TestCase
 {
     public function testConstructor()
     {
-        new SepaQr();
+        $this->assertInstanceOf(
+            SepaQr::class,
+            new SepaQr()
+        );
     }
 
     public function testSetCharacterSet()
@@ -16,7 +22,7 @@ class SepaQrTest extends \PHPUnit_Framework_TestCase
 
         $qrCode->setCharacterSet(SepaQr::UTF_8);
 
-        $this->setExpectedException('SepaQr\Exception');
+        $this->expectException('SepaQr\Exception');
         $qrCode->setCharacterSet('UTF8');
     }
 
@@ -24,7 +30,7 @@ class SepaQrTest extends \PHPUnit_Framework_TestCase
     {
         $qrCode = new SepaQr();
 
-        $this->setExpectedException('SepaQr\Exception');
+        $this->expectException('SepaQr\Exception');
 
         $qrCode->setRemittanceReference('ABC')
             ->setRemittanceText('DEF');
@@ -34,8 +40,11 @@ class SepaQrTest extends \PHPUnit_Framework_TestCase
     {
         $qrCode = new SepaQr();
 
-        $qrCode->setName('Test')
-            ->setIban('ABC')
-            ->get();
+        $this->assertInternalType(
+            'string',
+            $qrCode->setName('Test')
+                ->setIban('ABC')
+                ->writeString()
+        );
     }
 }
