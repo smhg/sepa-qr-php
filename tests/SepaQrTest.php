@@ -21,6 +21,7 @@ class SepaQrTest extends TestCase
         $qrCode->setCharacterSet(SepaQr::UTF_8);
 
         $this->expectException('SepaQr\Exception');
+
         $qrCode->setCharacterSet('UTF8');
     }
 
@@ -34,7 +35,29 @@ class SepaQrTest extends TestCase
             ->setRemittanceText('DEF');
     }
 
-    public function testCreate()
+    public function testEncodeMessage()
+    {
+        $qrCode = new SepaQr();
+
+        $qrCode->setName('Test')
+            ->setIban('ABC')
+            ->setRemittanceText('DEF');
+
+        $message = $qrCode->encodeMessage();
+
+        $this->assertEquals(
+            11,
+            count(split("\n", $message)),
+            'The last populated element cannot be followed by any character or element separator'
+        );
+
+        $this->assertTrue(
+            substr($message, strlen($message) - 3) === 'DEF',
+            'The last populated element cannot be followed by any character or element separator'
+        );
+    }
+
+    public function testGetWriter()
     {
         $qrCode = new SepaQr();
 

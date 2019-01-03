@@ -187,13 +187,13 @@ class SepaQr extends QrCode
         }
     }
 
-    public function getWriter($name = null)
+    public function encodeMessage()
     {
         $defaults = array(
             'bic' => '',
             'name' => '',
             'iban' => '',
-            'amount' => 0.01,
+            'amount' => '',
             'purpose' => '',
             'remittanceReference' => '',
             'remittanceText' => '',
@@ -204,7 +204,7 @@ class SepaQr extends QrCode
 
         $this->validateSepaValues($values);
 
-        $this->setText(implode("\n", array(
+        return rtrim(implode("\n", array(
             $values['serviceTag'],
             sprintf('%03d', $values['version']),
             $values['characterSet'],
@@ -212,11 +212,17 @@ class SepaQr extends QrCode
             $values['bic'],
             $values['name'],
             $values['iban'],
-            sprintf('EUR%.2f', $values['amount']),
+            $values['amount'] > 0 ? sprintf('EUR%.2f', $values['amount']) : $values['amount'],
             $values['purpose'],
-            $values['remittanceReference'] ? $values['remittanceReference'] : $values['remittanceText'],
+            $values['remittanceReference'],
+            $values['remittanceText'],
             $values['information']
-        )));
+        )), "\n");
+    }
+
+    public function getWriter($name = null)
+    {
+        $this->setText($this->encodeMessage());
 
         return parent::getWriter($name);
     }
