@@ -112,7 +112,7 @@ class SepaQr extends QrCode
             throw new Exception('Use either structured or unstructured remittance information');
         }
 
-        $this->sepaValues['remittanceReference'] = $remittanceReference;
+        $this->sepaValues['remittanceReference'] = (string)$remittanceReference;
         return $this;
     }
 
