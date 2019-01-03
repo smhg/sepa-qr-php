@@ -47,7 +47,7 @@ class SepaQrTest extends TestCase
 
         $this->assertEquals(
             11,
-            count(split("\n", $message)),
+            count(explode("\n", $message)),
             'The last populated element cannot be followed by any character or element separator'
         );
 
