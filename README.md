@@ -21,8 +21,17 @@ $sepaQr
   ->setRemittanceText('Invoice 123456789')
   ->setSize(300);
 
+// Output to browser:
 header('Content-Type: ' . $sepaQr->getContentType());
 echo $sepaQr->writeString();
+
+// Or, generate a temporary file:
+$tmpFileName = tempnam('/tmp', 'prefix');
+$tmpFile = fopen($tmpFileName, 'w');
+fwrite($tmpFile, $sepaQr->writeString());
+// ... add file to your PDF
+fclose($tmpFile);
+unlink($tmpFileName);
 ```
 ## Methods
 
