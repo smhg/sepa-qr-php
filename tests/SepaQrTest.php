@@ -41,9 +41,15 @@ class SepaQrTest extends TestCase
 
         $qrCode->setName('Test')
             ->setIban('ABC')
+            ->setAmount(1075.25)
             ->setRemittanceText('DEF');
 
         $message = $qrCode->encodeMessage();
+
+        $this->assertTrue(
+            stristr($message, '1075.25') !== false,
+            'The amount should be formatted using only a dot (.) as the decimal separator'
+        );
 
         $this->assertEquals(
             11,

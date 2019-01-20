@@ -4,6 +4,10 @@ namespace SepaQr;
 use Endroid\QrCode\ErrorCorrectionLevel;
 use Endroid\QrCode\QrCode;
 
+function formatMoney($value) {
+    return sprintf('EUR%s', number_format($value, 2, '.', ''));
+}
+
 class SepaQr extends QrCode
 {
     const UTF_8 = 1;
@@ -96,7 +100,7 @@ class SepaQr extends QrCode
 
     public function setAmount($amount)
     {
-        $this->sepaValues['amount'] = $amount;
+        $this->sepaValues['amount'] = (float)$amount;
         return $this;
     }
 
@@ -193,7 +197,7 @@ class SepaQr extends QrCode
             'bic' => '',
             'name' => '',
             'iban' => '',
-            'amount' => '',
+            'amount' => 0,
             'purpose' => '',
             'remittanceReference' => '',
             'remittanceText' => '',
@@ -212,7 +216,7 @@ class SepaQr extends QrCode
             $values['bic'],
             $values['name'],
             $values['iban'],
-            $values['amount'] > 0 ? sprintf('EUR%.2f', $values['amount']) : $values['amount'],
+            $values['amount'] > 0 ? formatMoney($values['amount']) : '',
             $values['purpose'],
             $values['remittanceReference'],
             $values['remittanceText'],
