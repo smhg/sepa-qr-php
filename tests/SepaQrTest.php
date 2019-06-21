@@ -3,10 +3,11 @@ namespace SepaQr\Test;
 
 use PHPUnit\Framework\TestCase;
 use SepaQr\SepaQr;
+use SepaQr\Exception;
 
 class SepaQrTest extends TestCase
 {
-    public function testConstructor()
+    public function testConstructor(): void
     {
         $this->assertInstanceOf(
             SepaQr::class,
@@ -14,7 +15,7 @@ class SepaQrTest extends TestCase
         );
     }
 
-    public function testSetCharacterSet()
+    public function testSetCharacterSet(): void
     {
         $qrCode = new SepaQr();
 
@@ -25,7 +26,7 @@ class SepaQrTest extends TestCase
         $qrCode->setCharacterSet('UTF8');
     }
 
-    public function testSetRemittance()
+    public function testSetRemittance(): void
     {
         $qrCode = new SepaQr();
 
@@ -35,7 +36,7 @@ class SepaQrTest extends TestCase
             ->setRemittanceText('DEF');
     }
 
-    public function testEncodeMessage()
+    public function testEncodeMessage(): void
     {
         $qrCode = new SepaQr();
 
@@ -61,17 +62,48 @@ class SepaQrTest extends TestCase
             substr($message, strlen($message) - 3) === 'DEF',
             'The last populated element cannot be followed by any character or element separator'
         );
+
+        $expectedString = <<<EOF
+BCD
+002
+1
+SCT
+
+Test
+ABC
+EUR1075.25
+
+
+DEF
+EOF;
+
+        $this->assertSame($expectedString, $message);
     }
 
-    public function testGetWriter()
+    public function testGetWriter(): void
     {
         $qrCode = new SepaQr();
 
-        $this->assertInternalType(
-            'string',
+        $this->assertIsString(
             $qrCode->setName('Test')
                 ->setIban('ABC')
                 ->writeString()
         );
+    }
+
+    public function testSetVersionExceptionCase1(): void
+    {
+        $this->expectException(Exception::class);
+
+        $qrCode = new SepaQr();
+        $qrCode->setVersion(3);
+    }
+
+    public function testSetVersionExceptionCase2(): void
+    {
+        $this->expectException(\TypeError::class);
+
+        $qrCode = new SepaQr();
+        $qrCode->setVersion('v1');
     }
 }
