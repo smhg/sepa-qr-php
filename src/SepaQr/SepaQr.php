@@ -3,6 +3,7 @@ namespace SepaQr;
 
 use Endroid\QrCode\ErrorCorrectionLevel;
 use Endroid\QrCode\QrCode;
+use Endroid\QrCode\Writer\WriterInterface;
 
 function formatMoney($value) {
     return sprintf('EUR%s', number_format($value, 2, '.', ''));
@@ -30,10 +31,10 @@ class SepaQr extends QrCode
     {
         parent::__construct($text);
 
-        $this->setErrorCorrectionLevel(ErrorCorrectionLevel::MEDIUM);
+        $this->setErrorCorrectionLevel(new ErrorCorrectionLevel(ErrorCorrectionLevel::MEDIUM));
     }
 
-    public function setServiceTag($serviceTag = 'BCD')
+    public function setServiceTag(string $serviceTag = 'BCD')
     {
         if ($serviceTag !== 'BCD') {
             throw new Exception('Invalid service tag');
@@ -44,10 +45,8 @@ class SepaQr extends QrCode
         return $this;
     }
 
-    public function setVersion($version = 2)
+    public function setVersion(int $version = 2)
     {
-        $version = (int)$version;
-
         if (!in_array($version, range(1, 2))) {
             throw new Exception('Invalid version');
         }
@@ -224,7 +223,7 @@ class SepaQr extends QrCode
         )), "\n");
     }
 
-    public function getWriter($name = null)
+    public function getWriter(string $name = null): WriterInterface
     {
         $this->setText($this->encodeMessage());
 
