@@ -28,7 +28,7 @@ header('Content-Type: ' . $sepaQr->getContentType());
 echo $sepaQr->writeString();
 
 // Or embed as image:
-echo '<img src="data:' . $sepaQr->getContentType() . ';base64,' . base64_encode($sepaQr->writeString()) . '">';
+echo '<img src="' . $sepaQr->writeDataUri() . '">';
 
 // Or generate a temporary file:
 $tmpFileName = tempnam('/tmp', 'prefix');
