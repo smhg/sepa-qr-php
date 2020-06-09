@@ -1,6 +1,6 @@
 {
     "name": "smhg/sepa-qr",
-    "description": "Generate SEPA QR codes",
+    "description": "Generate QR codes for SEPA payments",
     "license": "MIT",
     "authors": [
         {
