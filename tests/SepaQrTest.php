@@ -106,4 +106,22 @@ EOF;
         $qrCode = new SepaQr();
         $qrCode->setVersion('v1');
     }
+
+    public function testSetCurrency(): void
+    {
+        $qrCode = new SepaQr();
+
+        $qrCode->setName('Test')
+            ->setIban('ABC')
+            ->setCurrency('CHF')
+            ->setAmount(175.25)
+            ->setRemittanceText('DEF');
+
+        $message = $qrCode->encodeMessage();
+
+        $this->assertTrue(
+            stristr($message, 'CHF175.25') !== false,
+            'The amount should be prefixed by the currency'
+        );
+    }
 }

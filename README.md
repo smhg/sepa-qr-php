@@ -19,7 +19,7 @@ $sepaQr = new SepaQr();
 $sepaQr
   ->setName('Name of the beneficiary')
   ->setIban('BE123456789123456789')
-  ->setAmount(100) // The amount in Euro
+  ->setAmount(100) // default = Euro
   ->setRemittanceText('Invoice 123456789')
   ->setSize(300);
 
@@ -61,8 +61,11 @@ Set the AT-21 name of the beneficiary
 ### setIban($iban)
 Set the AT-20 account number of the beneficiary. Only IBAN is allowed.
 
+### setCurrency($currency = 'EUR')
+Set the AT-04 currency of the credit transfer.
+
 ### setAmount($amount)
-Set the AT-04 amount of the credit transfer. Currently (?) only amounts in Euro are allowed.
+Set the AT-04 amount of the credit transfer.
 
 ### setPurpose($purpose)
 Set the AT-44 purpose of the credit transfer.

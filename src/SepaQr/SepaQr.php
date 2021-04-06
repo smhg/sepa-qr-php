@@ -5,8 +5,8 @@ use Endroid\QrCode\ErrorCorrectionLevel;
 use Endroid\QrCode\QrCode;
 use Endroid\QrCode\Writer\WriterInterface;
 
-function formatMoney($value) {
-    return sprintf('EUR%s', number_format($value, 2, '.', ''));
+function formatMoney($currency = 'EUR', $value) {
+    return sprintf('%s%s', $currency, number_format($value, 2, '.', ''));
 }
 
 class SepaQr extends QrCode
@@ -97,6 +97,12 @@ class SepaQr extends QrCode
         return $this;
     }
 
+    public function setCurrency($currency = 'EUR')
+    {
+        $this->sepaValues['currency'] = $currency;
+        return $this;
+    }
+
     public function setAmount($amount)
     {
         $this->sepaValues['amount'] = (float)$amount;
@@ -169,11 +175,11 @@ class SepaQr extends QrCode
 
         if ($values['amount']) {
             if ($values['amount'] < 0.01) {
-                throw new Exception('Amount of the credit transfer cannot be smaller than 0.01 Euro');
+                throw new Exception('Amount of the credit transfer cannot be smaller than 0.01');
             }
 
             if ($values['amount'] > 999999999.99) {
-                throw new Exception('Amount of the credit transfer cannot be higher than 999999999.99 Euro');
+                throw new Exception('Amount of the credit transfer cannot be higher than 999999999.99');
             }
         }
 
@@ -196,6 +202,7 @@ class SepaQr extends QrCode
             'bic' => '',
             'name' => '',
             'iban' => '',
+            'currency' => 'EUR',
             'amount' => 0,
             'purpose' => '',
             'remittanceReference' => '',
@@ -215,7 +222,7 @@ class SepaQr extends QrCode
             $values['bic'],
             $values['name'],
             $values['iban'],
-            $values['amount'] > 0 ? formatMoney($values['amount']) : '',
+            $values['amount'] > 0 ? formatMoney($values['currency'], $values['amount']) : '',
             $values['purpose'],
             $values['remittanceReference'],
             $values['remittanceText'],
