@@ -1,7 +1,13 @@
+# This project is deprecated. Use [smhg/sepa-qr-data](https://github.com/smhg/sepa-qr-data-php) instead.
+
+A [migration guide](https://github.com/smhg/sepa-qr-data-php#migration-from-smhgsepa-qr) is available.
+
 # sepa-qr-php [![CI](https://github.com/smhg/sepa-qr-php/workflows/CI/badge.svg)](https://github.com/smhg/sepa-qr-php/actions)
 Generates SEPA QR codes based on the [European Payments Council's standard](http://www.europeanpaymentscouncil.eu/index.cfm/knowledge-bank/epc-documents/quick-response-code-guidelines-to-enable-data-capture-for-the-initiation-of-a-sepa-credit-transfer/epc069-12-quick-response-code-guidelines-to-enable-data-capture-for-the-initiation-of-a-sepa-credit-transfer1/). These QR codes are scannable by many mobile banking apps. Because app support is at a decent level, it is a good idea to print such a code on an invoice.
 
 Extends [endroid/qr-code](https://github.com/endroid/QrCode) preserving all its functionality in case lower level QR code manipulation is needed.
+
+> **PHP 8 support:** use [smhg/sepa-qr-data](https://github.com/smhg/sepa-qr-data-php).
 
 > **PHP 5.6 and <7.1 support:** use version 2.x of this library.
 
